@@ -24,11 +24,23 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'name' => $this->faker->name(),
+            'birth_date' => $this->faker->date('Y-m-d', '-18 years'),
+            'nationality' => $this->faker->country(),
+            'residence_state' => $this->faker->state(),
+            'residence_governorate' => $this->faker->city(),
+            'educational_qualification' => $this->faker->randomElement(['High School', 'Bachelor', 'Master', 'PhD']),
+            'phone' => $this->faker->phoneNumber(),
+            'alternative_phone' => $this->faker->optional()->phoneNumber(),
+            'alternative_phone_owner' => $this->faker->optional()->name(),
+            'telegram_id' => $this->faker->unique()->userName(),
+            'telegram_name' => $this->faker->userName(),
+            'quantity_of_quran' => $this->faker->numberBetween(0, 30),
+            'job' => $this->faker->optional()->jobTitle(),
+            'marital_status' => $this->faker->optional()->randomElement(['married', 'divorced', 'widowed', 'single']),
+            'password' => bcrypt('password'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 
@@ -37,7 +49,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

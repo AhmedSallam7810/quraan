@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -50,19 +51,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    // public function rooms(){
-
-    //     return $this->belongsToMany(Room::class,'room_user');
-    // }
-
-    public function roomsDevices()
+    public function quranReadings(): BelongsToMany
     {
-        return $this->belongsToMany(Room::class, 'room_user')
-            ->withPivot('device_id', 'created_at', 'updated_at');
+        return $this->belongsToMany(QuranReading::class);
     }
-
-    // public function devices(){
-
-    //     return $this->hasMany(Device::class);
-    // }
 }

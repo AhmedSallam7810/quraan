@@ -24,9 +24,9 @@ return new class extends Migration
         });
 
         Admin::create([
-            'name' => env('ADMIN_USER_NAME'),
-            'email' => env('ADMIN_EMAIL'),
-            'password' => env('ADMIN_PASSWORD')
+            'name' => config('admin.username'),
+            'email' => config('admin.email'),
+            'password' => config('admin.password'),
         ]);
     }
 
